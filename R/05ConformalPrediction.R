@@ -55,7 +55,7 @@ spat_agreement <- spat_data_model |>
   pull(.pred_class) == spat_test_data |> 
   pull(TimePoint)
 
-get_conformal_classes <- function(conformal_scores, test_preds, agreement, alpha) {
+get_conformal_classes <- function(conformal_scores, test_preds, agreement, alpha, test_data) {
   n <- nrow(test_preds)
   q_hat <- ceiling((n + 1) * (1 - alpha)) / n
   target_quantile <- quantile(conformal_scores, q_hat) |> unname()
@@ -64,28 +64,29 @@ get_conformal_classes <- function(conformal_scores, test_preds, agreement, alpha
       .pred_7d = .pred_7d > 1-target_quantile,
       .pred_21d = .pred_21d > 1-target_quantile,
       .pred_9w = .pred_9w > 1-target_quantile,
-      agreement = agreement
+      agreement = agreement,
+      true_class = test_data |> pull(TimePoint)
     )
 }
 
 full_conf_preds <- bind_rows(
   map(
     seq(0.025, 1, 0.025),
-    \(x){get_conformal_classes(full_conformal_scores, full_test_preds, full_agreement, x) |> mutate(alpha=x)}
+    \(x){get_conformal_classes(full_conformal_scores, full_test_preds, full_agreement, x, full_test_data) |> mutate(alpha=x)}
   )
 )
 
 area_conf_preds <- bind_rows(
   map(
     seq(0.025, 1, 0.025),
-    \(x){get_conformal_classes(area_conformal_scores, area_test_preds, area_agreement, x) |> mutate(alpha=x)}
+    \(x){get_conformal_classes(area_conformal_scores, area_test_preds, area_agreement, x, area_test_data) |> mutate(alpha=x)}
   )
 )
 
 spat_conf_preds <- bind_rows(
   map(
     seq(0.025, 1, 0.025),
-    \(x){get_conformal_classes(spat_conformal_scores, spat_test_preds, spat_agreement, x) |> mutate(alpha=x)}
+    \(x){get_conformal_classes(spat_conformal_scores, spat_test_preds, spat_agreement, x, spat_test_data) |> mutate(alpha=x)}
   )
 )
 
