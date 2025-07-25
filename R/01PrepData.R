@@ -64,9 +64,19 @@ full_data_train <- full_data |>
   filter(Training) |> 
   select(-Training)
 
+full_data_train <- recipe(TimePoint ~ ., data = full_data_train) |> 
+  step_downsample(TimePoint) |> 
+  prep() |> 
+  juice()
+
 full_data_test <- full_data |> 
   filter(!Training) |> 
   select(-Training)
+
+full_data_test <- recipe(TimePoint ~ ., data = full_data_test) |> 
+  step_downsample(TimePoint) |> 
+  prep() |> 
+  juice()
 
 full_data_eval <- full_data_test |> 
   initial_split(prop = 0.5, strata = TimePoint)
