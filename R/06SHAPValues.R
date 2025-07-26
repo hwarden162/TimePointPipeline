@@ -79,11 +79,29 @@ spatial_data_vals_3w <- get_shap_vals(spatial_data_train, spatial_data_test, spa
 spatial_data_vals_9w <- get_shap_vals(spatial_data_train, spatial_data_test, spatial_data_model, ".pred_9w")
 log_info("Spatial Data SHAP Values: CALCULATED")
 
-full_data_vals |> 
-  saveRDS("./data/full_shap_vals.rds")
+full_data_vals_1w |> 
+  saveRDS("./data/full_shap_vals_1wk.rds")
 
-area_data_vals |> 
-  saveRDS("./data/area_shap_vals.rds")
+full_data_vals_3w |> 
+  saveRDS("./data/full_shap_vals_3wk.rds")
 
-spatial_data_vals |> 
-  saveRDS("./data/spatial_shap_vals.rds")
+full_data_vals_9w |> 
+  saveRDS("./data/full_shap_vals_9wk.rds")
+
+area_data_vals_1w |> 
+  saveRDS("./data/area_shap_vals_1wk.rds")
+
+area_data_vals_3w |> 
+  saveRDS("./data/area_shap_vals_3wk.rds")
+
+area_data_vals_9w |> 
+  saveRDS("./data/area_shap_vals_9wk.rds")
+
+spatial_data_vals_1w |> 
+  saveRDS("./data/spatial_shap_vals_1wk.rds")
+
+spatial_data_vals_3w |> 
+  saveRDS("./data/spatial_shap_vals_3wk.rds")
+
+spatial_data_vals_9w |> 
+  saveRDS("./data/spatial_shap_vals_9wk.rds")
