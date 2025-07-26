@@ -11,11 +11,6 @@
 
 module load anaconda/2024.02
 
-source activate /exports/igmm/eddie/khamseh-lab/hwarden/GOFMLPipeline/env
+source activate /exports/igmm/eddie/khamseh-lab/hwarden/CancerPipeline/env
 
-Rscript ./R/01PrepData.R
-Rscript ./R/02TrainPreprocessors.R
-Rscript ./R/03TrainModels.R
-Rscript ./R/04EvaluateModels.R
-Rscript ./R/05ConformalPrediction.R
 Rscript ./R/06SHAPValues.R
